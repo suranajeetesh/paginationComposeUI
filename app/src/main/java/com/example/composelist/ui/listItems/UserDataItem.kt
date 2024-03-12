@@ -1,4 +1,4 @@
-package com.example.composelist.ui.items
+package com.example.composelist.ui.listItems
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
@@ -11,12 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,11 +25,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.composelist.R
 import com.example.composelist.data.remote.model.response.userData.DataList
 import com.example.composelist.ui.theme.ComposeListTheme
 import com.example.composelist.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
+
 
 /**
  * Created by Jeetesh Surana.
@@ -51,24 +54,16 @@ fun UserDataLists(
     homeViewModel: HomeViewModel,
     onClick: (userDataList: DataList?) -> Unit
 ) {
-    val data = homeViewModel.userData.collectAsState()
-    LazyColumn(content = {
-        items(data.value.data) {
-            UserCard(it) { userDataList ->
-                onClick(userDataList)
+    val lazyPagingItems: LazyPagingItems<DataList> = homeViewModel.getUserDataWithPagination().collectAsLazyPagingItems()
+
+    LazyColumn(state = rememberLazyListState()) {
+        items(lazyPagingItems.itemSnapshotList) { userDataList ->
+            UserCard(userDataList) { clickedUserDataList ->
+                onClick(clickedUserDataList)
             }
         }
-    })
+    }
 
-//    homeViewModel.userData.collectLatest { pagingData ->
-//        Log.e("TAG", " UserDataLists() --> ${Gson().toJson(pagingData)}")
-//
-//        // Use collectAsLazyPagingItems to get DataList from PagingData
-//        val dataList = pagingData.collectAsLazyPagingItems().snapshot().items
-//
-//        // Call the composable function within the @Composable context
-//        UserCard(userDataList = dataList.firstOrNull(), onClick = onClick)
-//    }
     LaunchedEffect(Unit) {
         activity.lifecycleScope.launch {
             homeViewModel.getData()

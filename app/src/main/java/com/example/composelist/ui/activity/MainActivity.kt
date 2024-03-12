@@ -11,17 +11,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.composelist.core.uI.BaseActivity
 import com.example.composelist.data.remote.model.response.userData.DataList
-import com.example.composelist.ui.items.UserCard
-import com.example.composelist.ui.items.UserDataLists
+import com.example.composelist.ui.listItems.UserCard
+import com.example.composelist.ui.listItems.UserDataLists
 import com.example.composelist.ui.theme.ComposeListTheme
 import com.example.composelist.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.toList
 
 
 @AndroidEntryPoint
