@@ -42,9 +42,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun GreetingPreview() {
     ComposeListTheme {
-        UserCard(DataList("", "test", "test", 0, "test"), {
-
-        })
+        UserCard(DataList("", "test", "test", 0, "test")) {}
     }
 }
 
@@ -70,22 +68,6 @@ fun UserDataLists(
         }
     }
 }
-
-
-/*
-@SuppressLint("CoroutineCreationDuringComposition")
-@Composable
-fun UserDataLists(activity: ComponentActivity, homeViewModel: HomeViewModel, onClick: (userDataList: DataList?) -> Unit) {
-    val myItems: LazyPagingItems<DataList> = homeViewModel.userData.collectAsLazyPagingItems()
-
-    LazyColumn {
-        items(myItems.itemCount) { myItem ->
-            // Compose UI for each item
-            Text(text = myItem.toString())
-        }
-    }
-}
-*/
 
 
 @Composable
