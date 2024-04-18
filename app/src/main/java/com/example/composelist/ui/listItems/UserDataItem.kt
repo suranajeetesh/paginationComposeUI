@@ -54,7 +54,6 @@ fun GreetingPreview() {
 
 @Composable
 fun UserDataLists(
-    activity: ComponentActivity,
     onClick: (userDataList: PostResponseItem?) -> Unit
 ) {
     val homeViewModel = hiltViewModel<HomeViewModel>()

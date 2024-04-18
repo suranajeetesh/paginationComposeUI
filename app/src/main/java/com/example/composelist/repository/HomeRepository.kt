@@ -1,14 +1,10 @@
 package com.example.composelist.repository
 
 import android.content.Context
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingSource
 import com.example.composelist.data.remote.model.response.post.PostResponse
+import com.example.composelist.data.remote.model.response.post.PostResponseItem
 import com.example.composelist.network.ApiRestService
 import com.example.composelist.network.SafeApiRequest
-import com.example.composelist.util.Constant
-import com.example.composelist.utils.PostDataPagingSource
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
@@ -23,10 +19,8 @@ class HomeRepository @Inject constructor(
         return apiRequest { api.getPostData(pageCount,limit) }
     }
 
-
-    suspend fun loadPostData(pageCount:String?,limit:String?): PagingSource<Int,PostResponse> {
-        return  api.loadPostData(pageCount,limit)
+    suspend fun getPostData(postId: String): PostResponseItem {
+        return apiRequest { api.getPostDetails(postId) }
     }
-
 
 }

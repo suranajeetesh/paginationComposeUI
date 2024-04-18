@@ -1,4 +1,4 @@
-package com.example.composelist.ui.activity
+package com.example.composelist.ui.screen
 
 import android.content.Intent
 import android.os.Bundle

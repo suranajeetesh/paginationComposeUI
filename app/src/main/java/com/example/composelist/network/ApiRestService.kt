@@ -15,6 +15,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -30,9 +31,8 @@ interface ApiRestService {
     suspend fun getPostData(@Query("_page") page:String?,@Query("_limit") limit:String?): Response<PostResponse>
 
 
-    @GET("posts")
-    suspend fun loadPostData(@Query("_page") page:String?,@Query("_limit") limit:String?): PagingSource<Int, PostResponse>
-
+    @GET("posts/{postId}")
+    suspend fun getPostDetails(@Path("postId") postId: String): Response<PostResponseItem>
 
     companion object {
         operator fun invoke(
