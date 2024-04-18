@@ -1,7 +1,9 @@
 package com.example.composelist.network
 
 import android.content.Context
-import com.example.composelist.data.remote.model.response.userData.UserDataResponse
+import androidx.paging.PagingSource
+import com.example.composelist.data.remote.model.response.post.PostResponse
+import com.example.composelist.data.remote.model.response.post.PostResponseItem
 import com.example.composelist.network.interceptor.HeaderInterceptor
 import com.example.composelist.network.interceptor.NetworkInterceptor
 import com.example.composelist.util.Constant.BASE_URL
@@ -24,8 +26,12 @@ import java.util.concurrent.TimeUnit
 
 interface ApiRestService {
 
-    @GET("users")
-    suspend fun getUserData(@Query("page") page:String?): Response<UserDataResponse>
+    @GET("posts")
+    suspend fun getPostData(@Query("_page") page:String?,@Query("_limit") limit:String?): Response<PostResponse>
+
+
+    @GET("posts")
+    suspend fun loadPostData(@Query("_page") page:String?,@Query("_limit") limit:String?): PagingSource<Int, PostResponse>
 
 
     companion object {

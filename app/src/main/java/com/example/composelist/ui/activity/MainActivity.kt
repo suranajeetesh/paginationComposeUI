@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.composelist.core.uI.BaseActivity
 import com.example.composelist.data.remote.model.response.userData.DataList
-import com.example.composelist.ui.listItems.UserCard
+import com.example.composelist.ui.listItems.PostCard
 import com.example.composelist.ui.listItems.UserDataLists
 import com.example.composelist.ui.theme.ComposeListTheme
 import com.example.composelist.viewmodel.HomeViewModel
@@ -36,39 +36,18 @@ class MainActivity : BaseActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-                    UserDataLists(this,homeViewModel) {
-                        Log.e("TAG","onCreate() --> ${it?.first_name}")
-                        Toast.makeText(this, "${it?.first_name}", Toast.LENGTH_SHORT).show();
+                    UserDataLists(this) {
+                        Log.e("TAG","onCreate() --> ${it?.title}")
+                        Toast.makeText(this, "${it?.title}", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         }
-//        callAPI()
     }
 
     private fun initObserver() {
 
     }
 
-//    private fun callAPI() {
-//        lifecycleScope.launch {
-//            homeViewModel.userData.collectAsLazyPagingItems().collect { lazyPagingItems ->
-//                val dataList: List<DataList> = lazyPagingItems.snapshot().items
-//
-//                // Now you can work with the list of items in dataList
-//                // For example, update your UI, perform operations, etc.
-//            }
-//        }
-//    }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ComposeListTheme {
-        UserCard(DataList("", "test", "test", 0, "test")){
-
-        }
-    }
-}

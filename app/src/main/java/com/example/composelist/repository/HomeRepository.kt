@@ -3,16 +3,14 @@ package com.example.composelist.repository
 import android.content.Context
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.example.composelist.data.remote.model.response.userData.DataList
-import com.example.composelist.data.remote.model.response.userData.UserDataResponse
+import androidx.paging.PagingSource
+import com.example.composelist.data.remote.model.response.post.PostResponse
 import com.example.composelist.network.ApiRestService
 import com.example.composelist.network.SafeApiRequest
 import com.example.composelist.util.Constant
-import com.example.composelist.utils.UserDataPagingSource
+import com.example.composelist.utils.PostDataPagingSource
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @ActivityRetainedScoped
@@ -21,12 +19,14 @@ class HomeRepository @Inject constructor(
     private val api: ApiRestService
 ) : SafeApiRequest(context) {
 
-    suspend fun getUserData(pageCount:String?): UserDataResponse {
-        return apiRequest { api.getUserData(pageCount) }
+    suspend fun getPostData(pageCount:String?,limit:String?): PostResponse {
+        return apiRequest { api.getPostData(pageCount,limit) }
     }
 
-   fun getUserDataWithPagination() = Pager(
-        config = PagingConfig(pageSize = Constant.NETWORK_PAGE_SIZE, enablePlaceholders = false),
-        pagingSourceFactory = { UserDataPagingSource(this) }
-    ).flow/*.cachedIn(viewModelScope)*/
+
+    suspend fun loadPostData(pageCount:String?,limit:String?): PagingSource<Int,PostResponse> {
+        return  api.loadPostData(pageCount,limit)
+    }
+
+
 }
